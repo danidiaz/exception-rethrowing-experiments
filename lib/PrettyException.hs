@@ -36,3 +36,4 @@ someExceptionToTree e =
 catchAndPrintSomeException :: IO () -> IO ()
 catchAndPrintSomeException action =
     catch action prettyPrintSomeException
+
