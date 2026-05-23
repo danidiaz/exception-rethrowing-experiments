@@ -12,12 +12,12 @@ import Control.Exception.Backtrace (setBacktraceMechanismState,
 import GHC.Stack (HasCallStack)
 
 catchAndThrow :: IO a -> IO a
-catchAndThrow action = catch action \(e :: SomeException) -> throwIO e
+catchAndThrow action = catch @SomeException action throwIO
 
 -- like 'catchAndThrow', but with a type of exception for which 'toException' 
 -- preserves context, here we used 'ExceptionWithContext'
 catchAndThrow' :: IO a -> IO a
-catchAndThrow' action = catch action \(e :: ExceptionWithContext SomeException) -> throwIO e
+catchAndThrow' action = catch @(ExceptionWithContext SomeException) action throwIO
 
 -- after migrating to 'catchNoPropagate' + 'rethrowIO'
 catchAndRethrow :: IO a -> IO a
