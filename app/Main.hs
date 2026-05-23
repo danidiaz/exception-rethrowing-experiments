@@ -15,10 +15,11 @@ catchAndThrow :: IO a -> IO a
 catchAndThrow action = catch action \(e :: SomeException) -> throwIO e
 
 -- like 'catchAndThrow', but with a type of exception for which 'toException' 
--- preserves context
+-- preserves context, here we used 'ExceptionWithContext'
 catchAndThrow' :: IO a -> IO a
 catchAndThrow' action = catch action \(e :: ExceptionWithContext SomeException) -> throwIO e
 
+-- after migrating to 'catchNoPropagate' + 'rethrowIO'
 catchAndRethrow :: IO a -> IO a
 catchAndRethrow action = catchNoPropagate @(ExceptionWithContext SomeException) action rethrowIO
 
